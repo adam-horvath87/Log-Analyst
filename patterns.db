@@ -1,0 +1,90 @@
+# patterns.db - Attack Signature Database
+# Project Sentinel - Plaintext Pattern Database
+#
+# Format: one pattern per line (case-insensitive matching is applied automatically)
+# Lines starting with '#' are comments and are ignored by the engine.
+#
+# Categories:
+#   [SQLi]  - SQL Injection attempts
+#   [LFI]   - Local File Inclusion / Path Traversal
+#   [XSS]   - Cross-Site Scripting
+#   [CMD]   - Command Injection
+#   [SCAN]  - Known scanner/bot signatures
+
+# --- SQL Injection ---
+UNION SELECT
+UNION ALL SELECT
+' OR '1'='1
+OR 1=1
+DROP TABLE
+INSERT INTO
+DELETE FROM
+UPDATE SET
+EXEC(
+EXECUTE(
+xp_cmdshell
+CAST(
+CONVERT(
+CHAR(
+INFORMATION_SCHEMA
+SLEEP(
+BENCHMARK(
+LOAD_FILE(
+INTO OUTFILE
+
+# --- Local File Inclusion / Path Traversal ---
+../../etc/passwd
+../../../etc/passwd
+../../../../etc/passwd
+/etc/passwd
+/etc/shadow
+/etc/hosts
+/proc/self/environ
+/var/log/apache
+/var/www/html
+boot.ini
+win.ini
+..%2F..%2F
+%2e%2e%2f
+%252e%252e%252f
+
+# --- Cross-Site Scripting (XSS) ---
+<script>
+</script>
+<script src=
+onerror=
+onload=
+javascript:
+alert(
+document.cookie
+eval(
+prompt(
+confirm(
+
+# --- Command Injection ---
+;cat /etc/passwd
+| cat /etc/passwd
+`id`
+`whoami`
+$(id)
+$(whoami)
+;ls -la
+; ls -la
+&& id
+& id
+
+# --- Common Scanner Signatures ---
+/wp-admin
+/wp-login.php
+/phpmyadmin
+/.env
+/.git/config
+/admin.php
+/config.php
+/shell.php
+/cmd.php
+/backdoor.php
+sqlmap
+nikto
+nessus
+openvas
